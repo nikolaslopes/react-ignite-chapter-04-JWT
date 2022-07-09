@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const isAuthenticated = false
 
   async function signIn({ email, password }: ISignInCredentials) {
-    console.log(email, password)
+    console.log({ email, password })
   }
 
   return (

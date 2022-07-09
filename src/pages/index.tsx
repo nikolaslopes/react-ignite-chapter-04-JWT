@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import { FormEvent, useState } from 'react'
+import { useAuthContext } from '../context/useAuthContext'
 import styles from '../styles/Home.module.css'
 
 const myStyles = {
@@ -21,10 +22,12 @@ const buttonStyles = {
 }
 
 const Home: NextPage = () => {
+  const { signIn } = useAuthContext()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
     const data = {
@@ -32,7 +35,7 @@ const Home: NextPage = () => {
       password,
     }
 
-    console.log(data)
+    await signIn({ email, password })
   }
 
   return (
