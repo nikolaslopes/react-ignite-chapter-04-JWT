@@ -6,9 +6,18 @@ import styles from '../styles/Home.module.css'
 
 const myStyles = {
   padding: '10px',
-  border: '2px solid #834832',
+  border: '2px solid #831dbd',
   borderRadius: '4px',
   outline: 'none',
+}
+
+const buttonStyles = {
+  width: '10rem',
+  border: '2px solid #831dbd',
+  borderRadius: '4px',
+  padding: '10px',
+  cursor: 'pointer',
+  marginTop: '2rem',
 }
 
 const Home: NextPage = () => {
@@ -23,7 +32,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <form className={styles.main}>
         <input
           style={{
             ...myStyles,
@@ -43,7 +52,11 @@ const Home: NextPage = () => {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-      </main>
+
+        <button style={{ ...buttonStyles }} type="submit">
+          Sign In
+        </button>
+      </form>
     </div>
   )
 }
