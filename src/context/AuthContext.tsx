@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { AuthContextData, IAuthProvider, ISignInCredentials } from './types'
 
-const AuthContext = createContext({} as AuthContextData)
+export const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
   const isAuthenticated = false
