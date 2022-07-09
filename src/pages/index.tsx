@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       password,
     }
 
-    await signIn({ email, password })
+    await signIn(data)
   }
 
   return (
