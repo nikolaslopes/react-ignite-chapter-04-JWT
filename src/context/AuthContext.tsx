@@ -1,3 +1,18 @@
 import { createContext } from 'react'
+import { AuthContextData, IAuthProvider, ISignInCredentials } from './types'
 
-const AuthContext = createContext({})
+const AuthContext = createContext({} as AuthContextData)
+
+export const AuthProvider = ({ children }: IAuthProvider) => {
+  const isAuthenticated = false
+
+  async function signIn({ email, password }: ISignInCredentials) {
+    console.log(email, password)
+  }
+
+  return (
+    <AuthContext.Provider value={{ signIn, isAuthenticated }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}

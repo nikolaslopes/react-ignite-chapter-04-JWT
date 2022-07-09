@@ -1,8 +1,14 @@
-export interface SignInCredentials {
+import { ReactNode } from 'react'
+
+export interface AuthContextData {
+  signIn(credentials: ISignInCredentials): Promise<void>
+  isAuthenticated: boolean
+}
+export interface ISignInCredentials {
   email: string
   password: string
 }
 
-export interface AuthContextData {
-  signIn(credentials: SignInCredentials): Promise<void>
+export interface IAuthProvider {
+  children: ReactNode
 }
