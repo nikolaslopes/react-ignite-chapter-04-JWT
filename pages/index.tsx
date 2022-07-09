@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import styles from '../styles/Home.module.css'
 
 const myStyles = {
@@ -24,6 +24,17 @@ const Home: NextPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault()
+
+    const data = {
+      email,
+      password,
+    }
+
+    console.log(data)
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -32,7 +43,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <form className={styles.main}>
+      <form className={styles.main} onSubmit={handleSubmit}>
         <input
           style={{
             ...myStyles,
