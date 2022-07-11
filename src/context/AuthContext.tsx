@@ -12,7 +12,7 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
   const [user, setUser] = useState<IUser>()
-  const isAuthenticated = false
+  const isAuthenticated = !!user
 
   async function signIn({ email, password }: ISignInCredentials) {
     try {
