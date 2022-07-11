@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios'
+import Router from 'next/router'
 import { createContext, useState } from 'react'
 import { Api } from '../services/Api'
 import {
@@ -28,13 +28,15 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         permissions,
         roles,
       })
+
+      Router.push('/dashboard')
     } catch (err) {
       console.log(err)
     }
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated }}>
+    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   )
