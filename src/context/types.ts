@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 export interface AuthContextData {
   signIn(credentials: ISignInCredentials): Promise<void>
-  user: IUser
+  user: IUser | undefined
   isAuthenticated: boolean
 }
 export interface IAuthProvider {
