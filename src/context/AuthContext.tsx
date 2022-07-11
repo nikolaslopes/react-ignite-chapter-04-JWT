@@ -16,12 +16,18 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   async function signIn({ email, password }: ISignInCredentials) {
     try {
-      const response = await Api.post('sessions', {
+      const response = await Api.post<IUser>('sessions', {
         email,
         password,
       })
 
-      console.log(response.data)
+      const { permissions, roles } = response.data
+
+      setUser({
+        email,
+        permissions,
+        roles,
+      })
     } catch (err) {
       console.log(err)
     }
