@@ -1,5 +1,12 @@
 import { setCookie } from 'nookies'
 
-export function setUserCookies(token: string) {
-  setCookie(undefined, 'NEXT_AUTH_BASE_TOKEN', token)
+export const setUserToken = (token: string) => {
+  setCookie(undefined, 'NEXT_AUTH_BASE_TOKEN', token, {
+    maxAge: 60 * 60 * 24 * 30, // 30 days
+    path: '/',
+  })
+}
+
+export const setUserRefreshToken = (refreshToken: string) => {
+  setCookie(undefined, 'NEXT_AUTH_REFRESH_TOKEN', refreshToken)
 }

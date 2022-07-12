@@ -7,7 +7,7 @@ import {
   ISignInCredentials,
   IUser,
 } from './types'
-import { setUserCookies } from './utils'
+import { setUserRefreshToken, setUserToken } from './utils'
 
 export const AuthContext = createContext({} as AuthContextData)
 
@@ -26,7 +26,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
       const { token, refreshToken, permissions, roles } = response.data
 
-      setUserCookies(token)
+      setUserToken(token)
+      setUserRefreshToken(refreshToken)
 
       setUser({
         email,
