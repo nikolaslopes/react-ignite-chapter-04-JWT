@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 export interface AuthContextData {
   signIn(credentials: ISignInCredentials): Promise<void>
-  user: IUser | undefined
+  user: Pick<IUser, 'email' | 'permissions' | 'roles'> | undefined
   isAuthenticated: boolean
 }
 export interface IAuthProvider {
@@ -15,6 +15,8 @@ export interface ISignInCredentials {
 
 export interface IUser {
   email: string
+  token: string
+  refreshToken: string
   permissions: string[]
   roles: string[]
 }

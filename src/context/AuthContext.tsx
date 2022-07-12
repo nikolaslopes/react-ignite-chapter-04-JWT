@@ -7,11 +7,14 @@ import {
   ISignInCredentials,
   IUser,
 } from './types'
+import { setUserCookies } from './utils'
 
 export const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
-  const [user, setUser] = useState<IUser>()
+  const [user, setUser] =
+    useState<Pick<IUser, 'email' | 'permissions' | 'roles'>>()
+
   const isAuthenticated = !!user
 
   async function signIn({ email, password }: ISignInCredentials) {
@@ -21,7 +24,9 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         password,
       })
 
-      const { permissions, roles } = response.data
+      const { token, refreshToken, permissions, roles } = response.data
+
+      setUserCookies(token)
 
       setUser({
         email,
