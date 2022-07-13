@@ -1,5 +1,6 @@
 import Router from 'next/router'
-import { createContext, useState } from 'react'
+import { parseCookies } from 'nookies'
+import { createContext, useEffect, useState } from 'react'
 import { Api } from '../services/Api'
 import {
   AuthContextData,
@@ -16,6 +17,16 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     useState<Pick<IUser, 'email' | 'permissions' | 'roles'>>()
 
   const isAuthenticated = !!user
+
+  useEffect(() => {
+    const { NEXT_AUTH_BASE_TOKEN: token } = parseCookies()
+
+    if (token) {
+      Api.get('/me').then((response) => {
+        console.log(response)
+      })
+    }
+  }, [])
 
   async function signIn({ email, password }: ISignInCredentials) {
     try {

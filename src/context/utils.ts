@@ -8,5 +8,8 @@ export const setUserToken = (token: string) => {
 }
 
 export const setUserRefreshToken = (refreshToken: string) => {
-  setCookie(undefined, 'NEXT_AUTH_REFRESH_TOKEN', refreshToken)
+  setCookie(undefined, 'NEXT_AUTH_REFRESH_TOKEN', refreshToken, {
+    maxAge: 60 * 60 * 24 * 30, // 30 days
+    path: '/',
+  })
 }
