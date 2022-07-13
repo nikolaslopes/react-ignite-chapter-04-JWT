@@ -1,3 +1,4 @@
+import Router from 'next/router'
 import { destroyCookie, setCookie } from 'nookies'
 
 export const TOKEN_NAME = 'NEXT_AUTH_BASE_TOKEN'
@@ -20,4 +21,5 @@ export const setUserRefreshToken = (refreshToken: string) => {
 export const signOut = () => {
   destroyCookie(undefined, TOKEN_NAME)
   destroyCookie(undefined, REFRESH_TOKEN_NAME)
+  Router.push('/')
 }

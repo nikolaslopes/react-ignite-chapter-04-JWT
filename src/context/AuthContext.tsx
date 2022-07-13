@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         })
         .catch(() => {
           signOut()
-          Router.push('/')
         })
     }
   }, [])
