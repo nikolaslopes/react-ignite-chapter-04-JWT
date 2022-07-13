@@ -1,5 +1,6 @@
 import axios, { Axios, AxiosError } from 'axios'
-import { parseCookies, setCookie } from 'nookies'
+import { parseCookies } from 'nookies'
+import { IUser } from '../context/types'
 import { setUserRefreshToken, setUserToken } from '../context/utils'
 
 export interface IAxiosErrorResponse {
@@ -32,7 +33,7 @@ Api.interceptors.response.use(
         if (!isRefreshing) {
           isRefreshing = true
 
-          Api.post('/refresh', {
+          Api.post<Pick<IUser, 'token' | 'refreshToken'>>('/refresh', {
             refreshToken,
           })
             .then((response) => {
@@ -43,6 +44,11 @@ Api.interceptors.response.use(
 
               Api.defaults.headers.common['Authorization'] = `Bearer ${token}`
               failedRequestsQueue.forEach((request) => request.onSuccess(token))
+              failedRequestsQueue = []
+            })
+            .catch((err) => {
+              failedRequestsQueue.forEach((request) => request.onError(err))
+              failedRequestsQueue = []
             })
 
             .finally(() => {
