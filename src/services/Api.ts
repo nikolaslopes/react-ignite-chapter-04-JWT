@@ -1,7 +1,12 @@
 import axios, { Axios, AxiosError } from 'axios'
 import { parseCookies } from 'nookies'
 import { IUser } from '../context/types'
-import { setUserRefreshToken, setUserToken } from '../context/utils'
+import {
+  setUserRefreshToken,
+  setUserToken,
+  signOut,
+  TOKEN_NAME,
+} from '../context/utils'
 
 export interface IAxiosErrorResponse {
   code?: string
@@ -13,10 +18,9 @@ let failedRequestsQueue: any[] = []
 
 export const Api = axios.create({
   baseURL: 'http://localhost:3333',
-  headers: {
-    Authorization: `Bearer ${cookies['NEXT_AUTH_BASE_TOKEN']}`,
-  },
 })
+
+Api.defaults.headers.common.Authorization = `Bearer ${cookies[TOKEN_NAME]}`
 
 Api.interceptors.response.use(
   (response) => {
@@ -42,7 +46,7 @@ Api.interceptors.response.use(
               setUserToken(token)
               setUserRefreshToken(response.data.refreshToken)
 
-              Api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+              Api.defaults.headers.common.Authorization = `Bearer ${token}`
               failedRequestsQueue.forEach((request) => request.onSuccess(token))
               failedRequestsQueue = []
             })
@@ -50,7 +54,6 @@ Api.interceptors.response.use(
               failedRequestsQueue.forEach((request) => request.onError(err))
               failedRequestsQueue = []
             })
-
             .finally(() => {
               isRefreshing = false
             })
@@ -63,7 +66,7 @@ Api.interceptors.response.use(
                 return
               }
 
-              originalConfig.headers['Authorization'] = `Bearer ${token}`
+              originalConfig.headers.Authorization = `Bearer ${token}`
 
               resolve(Api(originalConfig))
             },
@@ -73,10 +76,10 @@ Api.interceptors.response.use(
           })
         })
       } else {
-        if () {
-
-        }
+        signOut()
       }
     }
+
+    return Promise.reject(error)
   }
 )
