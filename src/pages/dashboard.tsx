@@ -6,7 +6,9 @@ export default function Dashboard() {
   const { user } = useAuthContext()
 
   useEffect(() => {
-    Api.get('/me').then((response) => console.log(response))
+    Api.get('/me')
+      .then((response) => console.log(response))
+      .catch((err) => alert(err))
   }, [])
 
   return (

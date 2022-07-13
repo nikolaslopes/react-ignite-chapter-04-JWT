@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import { parseCookies } from 'nookies'
+import { destroyCookie, parseCookies } from 'nookies'
 import { createContext, useEffect, useState } from 'react'
 import { Api } from '../services/Api'
 import {
@@ -8,7 +8,7 @@ import {
   ISignInCredentials,
   IUser,
 } from './types'
-import { setUserRefreshToken, setUserToken } from './utils'
+import { setUserRefreshToken, setUserToken, signOut } from './utils'
 
 export const AuthContext = createContext({} as AuthContextData)
 
@@ -22,11 +22,16 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     const { NEXT_AUTH_BASE_TOKEN: token } = parseCookies()
 
     if (token) {
-      Api.get<IUser>('/me').then((response) => {
-        const { email, permissions, roles } = response.data
+      Api.get<IUser>('/me')
+        .then((response) => {
+          const { email, permissions, roles } = response.data
 
-        setUser({ email, permissions, roles })
-      })
+          setUser({ email, permissions, roles })
+        })
+        .catch(() => {
+          signOut()
+          Router.push('/')
+        })
     }
   }, [])
 
