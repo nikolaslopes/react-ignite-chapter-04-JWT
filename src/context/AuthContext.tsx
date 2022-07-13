@@ -22,8 +22,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     const { NEXT_AUTH_BASE_TOKEN: token } = parseCookies()
 
     if (token) {
-      Api.get('/me').then((response) => {
-        console.log(response)
+      Api.get<IUser>('/me').then((response) => {
+        const { email, permissions, roles } = response.data
+
+        setUser({ email, permissions, roles })
       })
     }
   }, [])
@@ -45,6 +47,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         permissions,
         roles,
       })
+
+      Api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
       Router.push('/dashboard')
     } catch (err) {
