@@ -1,25 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-
 import { FormEvent, useState } from 'react'
 import { useAuthContext } from '../context/useAuthContext'
 import styles from '../styles/Home.module.css'
-
-const myStyles = {
-  padding: '10px',
-  border: '2px solid #831dbd',
-  borderRadius: '4px',
-  outline: 'none',
-}
-
-const buttonStyles = {
-  width: '10rem',
-  border: '2px solid #831dbd',
-  borderRadius: '4px',
-  padding: '10px',
-  cursor: 'pointer',
-  marginTop: '2rem',
-}
 
 const Home: NextPage = () => {
   const { signIn } = useAuthContext()
@@ -48,26 +31,21 @@ const Home: NextPage = () => {
 
       <form className={styles.main} onSubmit={handleSubmit}>
         <input
-          style={{
-            ...myStyles,
-          }}
+          className={styles.input}
           type="email"
           placeholder="E-mail"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
         <input
-          style={{
-            ...myStyles,
-            marginTop: '10px',
-          }}
+          className={styles.input}
           placeholder="Password"
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
 
-        <button style={{ ...buttonStyles }} type="submit">
+        <button className={styles.btn} type="submit">
           Sign In
         </button>
       </form>

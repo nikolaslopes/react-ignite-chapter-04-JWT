@@ -114,3 +114,23 @@
     flex-direction: column;
   }
 }
+
+.input {
+  padding: 10px;
+  border: 2px solid #831dbd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.input:nth-child(1) {
+  margin-bottom: 10px;
+}
+
+.btn {
+  width: 10rem;
+  border: 2px solid #831dbd;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 2rem;
+}
