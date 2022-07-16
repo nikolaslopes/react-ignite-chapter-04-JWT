@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import { destroyCookie, parseCookies } from 'nookies'
+import { parseCookies } from 'nookies'
 import { createContext, useEffect, useState } from 'react'
 import { Api } from '../services/Api'
 import {
